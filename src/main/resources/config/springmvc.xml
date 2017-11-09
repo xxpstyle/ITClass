@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--
+    自动扫描组件（@Controller, @Service, @Repository, @Component）
+    配置自动去扫描带有@Controller注解的所有类
+    -->
+    <context:component-scan base-package="com.xp.controller" />
+    <!-- 开启注解 -->
+    <mvc:annotation-driven />
+
+    <!-- 配置去哪里查找什么样的视图 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!-- 配置spring mvc的数据转换服务
+     2017-09-08 08:30:00
+     -->
+    <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean"></bean>
+
+    <!-- 处理RequestMapping的服务 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
+    <!-- 配置静态文件的路径 -->
+    <mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
+    <!-- 配置文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="209715200"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+</beans>

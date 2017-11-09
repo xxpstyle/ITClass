@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <setting name="useColumnLabel" value="true" />
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <!--
+            is_delete
+            isDelete
+
+            classmate_address
+            classmateAddress
+         -->
+    </settings>
+
+    <!--
+        类型别名配置
+        com.gs.bean.UserBean
+        UserBean
+        userBean
+     -->
+    <typeAliases>
+        <package name="com.xp.bean"/>
+        <!-- 单独为类定义别名
+        <typeAlias type="com.gs.bean.User" alias="user" />
+        -->
+    </typeAliases>
+
+</configuration>

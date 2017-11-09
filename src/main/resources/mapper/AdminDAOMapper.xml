@@ -1,0 +1,72 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xp.dao.AdminDao">
+
+    <!-- 类似于hibernate里对象映射，字段与属性的映射
+
+    用于返回结果时直接把数据库结果封装为JavaBean，不需要显式地说明每一个字段
+    类的属性：
+    1）如果没有驼峰式，则属性即字段
+    2）如果有驼峰式，则把属性变成带有_的字段
+    -->
+    <resultMap id="adminMap" type="admin">
+    </resultMap>
+
+    <!-- id 值与dao接口里的方法名保持一致
+        parameterType可以使用对象方式，些对象是javabean 的别名
+        如果要引用类里的属性或者其他的参数值，#{}来引用
+    -->
+    <insert id="add" parameterType="admin">
+        <![CDATA[
+          insert into admin(mail, password,name,headpath,sex,status,createtime) values(#{mail}, "mypass123",#{name},"1.jpg",#{sex},0,now());
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="admin">
+        <![CDATA[
+          update admin
+        ]]>
+        <set>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="headpath != null and headpath != ''">
+                headpath = #{headpath},
+            </if>
+            <if test="sex != 0">
+                sex = #{sex},
+            </if>
+            <if test="status != 0">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="Integer">
+        <![CDATA[
+          select * from admin where id = #{id};
+        ]]>
+    </select>
+
+    <select id="listByPager" resultMap="adminMap">
+        <![CDATA[
+          select * from admin;
+        ]]>
+    </select>
+
+    <select id="login" resultMap="adminMap">
+        <![CDATA[
+          select * from admin where mail = #{mail} and password = #{password} and status = 1;
+        ]]>
+    </select>
+
+</mapper>
